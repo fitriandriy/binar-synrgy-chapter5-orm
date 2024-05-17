@@ -10,7 +10,7 @@ const config: { [key: string]: Knex.Config } = {
       password: "postgres",
       port: 5432,
       host: "127.0.0.1",
-      database: "ch5_orm",
+      database: "ch5_orm_",
     }
   },
 };

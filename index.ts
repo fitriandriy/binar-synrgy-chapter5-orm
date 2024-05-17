@@ -2,6 +2,7 @@ import express, { Express, Response } from "express";
 import knex from 'knex'
 import {Model} from 'objection'
 import { ArticlesModel } from "./model/article.model";
+import { CommentsModel } from "./model/comment.model";
 
 const app: Express = express();
 const port = 3000;
@@ -26,9 +27,15 @@ app.get("/", (_, res: Response) => {
 });
 
 app.get('/articles', async (req, res) => {
-  const articles = await ArticlesModel.query().select('*')
+  const articles = await ArticlesModel.query().withGraphFetched('comments')
 
   res.json({data: articles})
+})
+
+app.get('/comments', async (req, res) => {
+  const comments = await CommentsModel.query().withGraphFetched('articles')
+
+  res.json({data: comments})
 })
 
 app.post('/articles', async (req, res) => {
